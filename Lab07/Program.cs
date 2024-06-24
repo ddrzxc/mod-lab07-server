@@ -5,9 +5,34 @@ namespace TPProj
 {
     class Program
     {
+        static long Factorial(int n)
+        {
+            if (n == 0) return 1;
+            return n * Factorial(n - 1);
+        }
         static void Main()
         {
-            
+            double servIntens = 20.0 / 1000;
+            double reqIntens = 100.0 / 1000;
+            int reqN = 100;
+            int N = 3;
+
+            double ro = reqIntens / servIntens;
+            double P0 = 0;
+            for (int i = 0; i <= N; i++)
+            {
+                P0 += Math.Pow(ro, i) / Factorial(i);
+            }
+            P0 = 1 / P0;
+            double Pn = P0 * Math.Pow(ro, N) / Factorial(N);
+            double Q = 1 - Pn;
+            double A = reqIntens * Q;
+            double k = A / servIntens;
+            Console.WriteLine($"Вероятность простоя системы          : {Math.Round(P0, 5)}");
+            Console.WriteLine($"Вероятность отказа системы           : {Math.Round(Pn, 5)}");
+            Console.WriteLine($"Относительная пропускная способность : {Math.Round(Q, 5)}");
+            Console.WriteLine($"Абсолютная пропускная способность    : {Math.Round(A, 5)}");
+            Console.WriteLine($"Среднее число занятых каналов        : {Math.Round(k, 5)}");
         }
     }
 
